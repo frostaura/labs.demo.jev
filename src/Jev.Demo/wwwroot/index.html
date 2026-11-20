@@ -15,6 +15,7 @@
     <div class="spacer"></div>
     <h1 data-talk="title"></h1>
     <p class="sub" data-talk="subtitle"></p>
+    <div class="rule" style="margin-top:40px;margin-bottom:0"></div>
     <div class="speaker">
       <img data-speaker="photo" alt="" hidden>
       <div>
@@ -140,7 +141,7 @@
     <h2>The Titanic dataset</h2>
     <table class="data" id="titanic-table"></table>
     <div class="spacer"></div>
-    <p class="small muted">8 of the 891 passengers. Every row is one person who boarded in April 1912.</p>
+    <p class="small muted" style="margin-top:26px">8 of the 891 passengers. Every row is one person who boarded in April 1912.</p>
   </section>
 
   <!-- 9 · XGBoost binary -->
@@ -273,8 +274,8 @@ model.predict(X_test)</pre>
         <span class="g1" style="left:38%;top:32%">queen</span>
         <span class="g1" style="left:20%;top:42%">prince</span>
         <span class="g2" style="left:72%;top:26%">refund</span>
-        <span class="g2" style="left:82%;top:40%">invoice</span>
-        <span class="g2" style="left:66%;top:46%">payment</span>
+        <span class="g2" style="left:80%;top:44%">invoice</span>
+        <span class="g2" style="left:62%;top:38%">payment</span>
         <span class="g3" style="left:34%;top:76%">lifeboat</span>
         <span class="g3" style="left:52%;top:84%">iceberg</span>
         <span class="g3" style="left:56%;top:68%">ship</span>
@@ -310,8 +311,7 @@ model.predict(X_test)</pre>
       <div class="arrow">→</div>
       <div class="step accent">A typed decision<small>nothing to parse</small></div>
     </div>
-    <div class="spacer"></div>
-    <p>The context you pass to Jev is encoded into numbers exactly the way a prompt is — it just never has to write.</p>
+    <p class="small" style="margin-top:34px">The context you pass to Jev is encoded into numbers exactly the way a prompt is — it just never has to write.</p>
   </section>
 
   <!-- 17 · Fast, cheap, type-safe -->
@@ -339,11 +339,136 @@ model.predict(X_test)</pre>
     <p class="small muted">Type-safe is not the same as always right: Jev always gives a valid answer, and a probability telling you how sure it is.</p>
   </section>
 
+  <!-- Anatomy of a request -->
+  <section class="slide" data-title="Anatomy of a Jev request">
+    <div class="kicker">Part 3 · What you send</div>
+    <h2>A Jev request is just <strong>JSON</strong></h2>
+    <div class="anatomy">
+      <pre class="code" data-lang="json">POST https://openrouter.ai/api/alpha/decisions
+
+{
+  "model": "typesafe/jev-1.14",
+  "state": {
+    "customerMessage": "I was charged twice this month…"
+  },
+  "questions": {
+    "department": {
+      "type": "choice",
+      "instructions": "Which team should handle this?",
+      "criteria": {
+        "billing": "Charges, invoices and refunds",
+        "sales": "Pricing questions and upgrades",
+        "account": "Login and account access"
+      }
+    }
+  }
+}</pre>
+      <dl class="keys">
+        <div><dt>model</dt><dd>Which version of Jev to call.</dd></div>
+        <div><dt>state</dt><dd>The situation to judge. Any text or JSON you like — there is no fixed schema.</dd></div>
+        <div><dt>questions</dt><dd>One or more questions, each with a name you choose. All are answered in the same call.</dd></div>
+        <div><dt>type</dt><dd>The shape of the answer you want: <span class="hl2">noul</span>, <span class="hl2">choice</span> or <span class="hl2">score</span>.</dd></div>
+        <div><dt>instructions</dt><dd>The question itself, in plain language.</dd></div>
+        <div><dt>criteria</dt><dd>The only answers Jev may give, and what each one means. This is where your knowledge goes.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Question types -->
+  <section class="slide types" data-title="The three question types">
+    <div class="kicker">Part 3 · What you can ask</div>
+    <h2>Three kinds of question</h2>
+    <div class="cols three">
+      <div class="card">
+        <span class="tag">noul</span>
+        <h3>Yes or no</h3>
+        <pre class="code" data-lang="json">{
+  "type": "noul",
+  "instructions": "Is this fraud?",
+  "criteria": {
+    "true": "Stolen card signs",
+    "false": "A normal purchase"
+  }
+}</pre>
+        <p>Answers with the <strong>probability of yes</strong>, from 0 to 1.</p>
+        <p class="muted">criteria: what "true" and "false" each mean.</p>
+      </div>
+      <div class="card">
+        <span class="tag">choice</span>
+        <h3>One of many</h3>
+        <pre class="code" data-lang="json">{
+  "type": "choice",
+  "instructions": "Which team?",
+  "criteria": {
+    "billing": "Charges, refunds",
+    "sales": "Pricing, upgrades"
+  }
+}</pre>
+        <p>Answers with <strong>exactly one</strong> of your options, plus a probability for each.</p>
+        <p class="muted">criteria: option name → description.</p>
+      </div>
+      <div class="card">
+        <span class="tag">score</span>
+        <h3>Where on a scale</h3>
+        <pre class="code" data-lang="json">{
+  "type": "score",
+  "instructions": "How urgent?",
+  "criteria": [
+    "Can wait",
+    "Soon",
+    "Right now"
+  ]
+}</pre>
+        <p>Answers with a <strong>position</strong> on your scale: 0 is the first level.</p>
+        <p class="muted">criteria: the levels, lowest first.</p>
+      </div>
+    </div>
+    <div class="spacer"></div>
+    <p class="small muted">A fourth type, <span class="hl2">box</span>, points at something inside an image. We will not need it today.</p>
+  </section>
+
+  <!-- Anatomy of a response -->
+  <section class="slide" data-title="Anatomy of a Jev response">
+    <div class="kicker">Part 3 · What you get back</div>
+    <h2>The answer is <strong>JSON</strong> too — never prose</h2>
+    <div class="anatomy">
+      <pre class="code" data-lang="json" style="font-size:20px">{
+  "model": "typesafe/jev-1.14-20261014",
+  "answers": {
+    "department": {
+      "type": "choice",
+      "choice": "billing",
+      "probabilities": { "billing": 1, "sales": 0, "account": 0 },
+      "confidence": 1
+    },
+    "wantsRefund": { "type": "noul", "noul": 0.98 },
+    "urgency": {
+      "type": "score",
+      "score": 1.99,
+      "probabilities": { "0": 0, "1": 0.01, "2": 0.99 },
+      "legend": { "0": "Can wait", "1": "Soon", "2": "Now" }
+    }
+  },
+  "usage": { "input_tokens": 506, "cost": 0.0000213 }
+}</pre>
+      <dl class="keys">
+        <div><dt>answers</dt><dd>One answer per question, under the names you chose.</dd></div>
+        <div><dt>choice</dt><dd>The winning option. Always one of yours.</dd></div>
+        <div><dt>probabilities</dt><dd>How likely Jev thinks each option is.</dd></div>
+        <div><dt>confidence</dt><dd>How decisive that spread is: 1 means no doubt.</dd></div>
+        <div><dt>noul</dt><dd>The probability that the answer is yes.</dd></div>
+        <div><dt>score</dt><dd>The position on your scale, weighted by probability.</dd></div>
+        <div><dt>legend</dt><dd>Maps each position back to your label.</dd></div>
+        <div><dt>usage</dt><dd>Tokens read and the cost in dollars. Output is free.</dd></div>
+      </dl>
+    </div>
+  </section>
+
   <!-- 18 · Type safety in code -->
   <section class="slide" data-title="Type safety in code">
     <div class="kicker">Part 3 · This is the code running behind these slides</div>
     <h2>Your types <strong>are</strong> the question</h2>
-    <pre class="code" data-lang="cs">public enum Department
+    <pre class="code" data-lang="cs" style="font-size:25px">public enum Department
 {
     [Description("Charges, invoices, refunds and payment problems")] Billing,
     [Description("Something is broken, slow, or not working as documented")] TechnicalSupport,
@@ -351,16 +476,14 @@ model.predict(X_test)</pre>
     [Description("Login, password, profile and account access")] Account,
 }
 
-var decision = await jev.DecideAsync(
-    new { customerMessage },
-    new Dictionary&lt;string, object&gt;
-    {
-        ["department"]  = Question.Choice&lt;Department&gt;("Which team should handle this message?"),
-        ["wantsRefund"] = Question.YesNo("Is the customer asking for their money back?", yes, no),
-    });
+var decision = await jev.DecideAsync(new { customerMessage }, new Dictionary&lt;string, object&gt;
+{
+    ["department"]  = Question.Choice&lt;Department&gt;("Which team should handle this message?"),
+    ["wantsRefund"] = Question.YesNo("Is the customer asking for their money back?", yes, no),
+});
 
-Department department = decision.Choice&lt;Department&gt;("department");   // can only be one of four values
-double wantsRefund    = decision.Probability("wantsRefund");          // 0.0 – 1.0</pre>
+Department department = decision.Choice&lt;Department&gt;("department");  // only ever one of four values
+double wantsRefund    = decision.Probability("wantsRefund");         // 0.0 to 1.0</pre>
   </section>
 
   <!-- 19 · Section -->

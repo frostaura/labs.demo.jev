@@ -14,7 +14,11 @@ app.Logger.LogInformation("Environment file: {EnvFile}. OpenRouter key present: 
     envFile ?? "none found", OpenRouterClient.ApiKey is not null, OpenRouterClient.JevModel);
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
+// Never cache: an edited slide or a newly dropped sponsor logo must show on the next refresh.
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context => context.Context.Response.Headers.CacheControl = "no-store",
+});
 
 // Everything the deck needs to render: the talk, the speaker, the sponsors and what is wired up.
 app.MapGet("/api/config", (IConfiguration configuration, IWebHostEnvironment environment,

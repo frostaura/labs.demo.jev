@@ -63,12 +63,12 @@ window.addEventListener("resize", fit);
 window.addEventListener("hashchange", () => show(Number(location.hash.slice(1)) - 1 || 0));
 
 function toggleTheme() {
-  const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
   document.documentElement.dataset.theme = next;
-  try { localStorage.setItem("theme", next); } catch { /* private window: the choice just won't persist */ }
+  try { localStorage.setItem("deck-theme", next); } catch { /* private window: the choice just won't persist */ }
 }
 try {
-  const saved = localStorage.getItem("theme");
+  const saved = localStorage.getItem("deck-theme");
   if (saved) document.documentElement.dataset.theme = saved;
 } catch { /* storage unavailable: default theme */ }
 
@@ -79,7 +79,15 @@ const KEYWORDS = {
   cs: ["public", "enum", "var", "new", "await", "double", "string", "object"],
 };
 
+function highlightJson(pre) {
+  const escape = (text) => text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // A string followed by a colon is a key; any other string is a value.
+  pre.innerHTML = escape(pre.textContent).replace(/("(?:[^"\\]|\\.)*")(\s*:)?/g,
+    (_, text, colon) => `<span class="${colon ? "k" : "s"}">${text}</span>${colon ?? ""}`);
+}
+
 function highlight(pre) {
+  if (pre.dataset.lang === "json") return highlightJson(pre);
   const comment = pre.dataset.lang === "py" ? /#.*/ : /\/\/.*/;
   const words = KEYWORDS[pre.dataset.lang] ?? [];
   const pattern = new RegExp(`(${comment.source})|("(?:[^"\\\\]|\\\\.)*")|\\b(${words.join("|")})\\b`, "g");
@@ -160,28 +168,32 @@ function bar(label, probability, chosen) {
 }
 
 /** Draws one typed answer — yes/no, choice or score — as probability bars. */
-function renderAnswer(name, answer, truth) {
-  const box = el("div", { className: "answer" }, el("div", { className: "name", textContent: pretty(name) }));
+function renderAnswer(name, answer, truth, { compact = false } = {}) {
+  const head = el("div", { className: "head" }, el("span", { className: "name", textContent: pretty(name) }));
+  const box = el("div", { className: "answer" }, head);
+  const say = (text) => head.append(el("span", { className: "verdict", textContent: text }));
   let verdict = null;
 
   if (answer.type === "noul") {
     verdict = answer.noul >= 0.5;
-    box.append(el("div", { className: "verdict", textContent: verdict ? "Yes" : "No" }),
-      bar("yes", answer.noul, verdict), bar("no", 1 - answer.noul, !verdict));
+    say(verdict ? "Yes" : "No");
+    box.append(bar("yes", answer.noul, verdict));
+    if (!compact) box.append(bar("no", 1 - answer.noul, !verdict));
   } else if (answer.type === "choice") {
     verdict = answer.choice;
-    box.append(el("div", { className: "verdict", textContent: pretty(answer.choice) }));
+    say(pretty(answer.choice));
     Object.entries(answer.probabilities ?? { [answer.choice]: 1 })
       .sort((a, b) => b[1] - a[1])
+      .slice(0, compact ? 2 : undefined)
       .forEach(([option, probability]) => box.append(bar(pretty(option), probability, option === answer.choice)));
   } else if (answer.type === "score") {
     const legend = answer.legend ?? {};
     const top = Math.max(1, Object.keys(answer.probabilities ?? legend).length - 1);
-    box.append(el("div", { className: "verdict", textContent: `${answer.score.toFixed(2)} of ${top}` }));
+    say(`${answer.score.toFixed(2)} of ${top}`);
     Object.entries(answer.probabilities ?? {}).forEach(([index, probability]) =>
       box.append(bar(String(legend[index] ?? index).split(":")[0], probability, Number(index) === Math.round(answer.score))));
   } else {
-    box.append(el("div", { className: "verdict", textContent: answer.type === "refusal" ? "Jev declined to answer" : JSON.stringify(answer) }));
+    say(answer.type === "refusal" ? "Jev declined to answer" : JSON.stringify(answer));
   }
 
   if (truth !== undefined && verdict !== null) {
@@ -192,15 +204,15 @@ function renderAnswer(name, answer, truth) {
   return box;
 }
 
-function renderMeta(result) {
+function renderMeta(result, { compact = false } = {}) {
   const pills = [
     el("span", { className: `pill ${result.cached ? "cached" : "live"}`, textContent: result.cached ? "REPLAY (offline)" : "LIVE" }),
     el("span", { className: "pill", textContent: `${Math.round(result.latencyMs)} ms` }),
   ];
-  if (result.usage?.input_tokens != null) pills.push(el("span", { className: "pill", textContent: `${result.usage.input_tokens} tokens read` }));
+  if (!compact && result.usage?.input_tokens != null) pills.push(el("span", { className: "pill", textContent: `${result.usage.input_tokens} tokens read` }));
   if (result.usage?.cost != null) {
     pills.push(el("span", { className: "pill", textContent: money(result.usage.cost) }));
-    pills.push(el("span", { className: "pill", textContent: `≈ $${(result.usage.cost * 1000).toFixed(2)} per 1,000 decisions` }));
+    if (!compact) pills.push(el("span", { className: "pill", textContent: `≈$${(result.usage.cost * 1000).toFixed(2)} per 1,000 decisions` }));
   }
   return el("div", { className: "meta" }, ...pills);
 }
@@ -268,7 +280,10 @@ function titanicDemo(root, passengers, { questions, withClass, truths }) {
   const button = el("button", { className: "btn", textContent: "Ask Jev" });
   const { pane, output } = resultPane();
   const body = () => ({ state: passengerState(passengers[select.value], { withClass }), questions });
-  const refresh = () => { request.textContent = JSON.stringify(body(), null, 2); };
+  const refresh = () => {
+    request.textContent = JSON.stringify(body(), null, 2);
+    highlightJson(request);
+  };
   select.addEventListener("change", refresh);
   refresh();
 
@@ -328,8 +343,8 @@ function triageDemo(root) {
     const { typed, raw } = await post("/api/triage", { message: textarea.value });
     return [
       el("div", { className: "typed", textContent: `TriageDecision { Department = ${typed.department}, Urgency = ${typed.urgency.toFixed(2)}, WantsRefund = ${typed.wantsRefund.toFixed(2)} }` }),
-      ...Object.entries(raw.answers).map(([name, answer]) => renderAnswer(name, answer)),
-      renderMeta(raw),
+      ...Object.entries(raw.answers).map(([name, answer]) => renderAnswer(name, answer, undefined, { compact: true })),
+      renderMeta(raw, { compact: true }),
     ];
   });
 
