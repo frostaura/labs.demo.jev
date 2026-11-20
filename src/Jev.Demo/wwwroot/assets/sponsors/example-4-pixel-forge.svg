@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" role="img" aria-label="Example sponsor: Pixel Forge">
+  <g>
+    <rect x="36" y="48" width="48" height="48" rx="8" fill="#c41c1c"/>
+    <rect x="92" y="48" width="48" height="48" rx="8" fill="#0a0a0b"/>
+    <rect x="36" y="104" width="48" height="48" rx="8" fill="#0a0a0b"/>
+    <rect x="92" y="104" width="48" height="48" rx="8" fill="#c41c1c"/>
+  </g>
+  <text x="176" y="122" font-family="'Courier New', Menlo, monospace" font-size="54" font-weight="700" fill="#0a0a0b">pixel.forge</text>
+</svg>

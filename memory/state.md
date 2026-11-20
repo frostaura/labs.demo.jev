@@ -27,7 +27,11 @@ the founder's direction.
 - `dotnet build -warnaserror`: 0 warnings. The three XGBoost scripts were run in a throwaway
   virtualenv: 82.1% · 95.0% · 80.4% and 94.4%, the figures on the slides.
 
-**Not done:** no sponsor logos and no speaker photo supplied; the speaker bio in
+**Example sponsor logos are committed on purpose** (founder, 2026-11-21: keep examples "so that I
+know what to override", and they must be pictures): four invented `example-*.svg` files plus four
+matching `Sponsors:Overrides` entries. They show on the first and last slides until replaced.
+
+**Not done:** no real sponsor logos and no speaker photo supplied; the speaker bio in
 `appsettings.json` is a two-line stand-in written from the root brand lines; no automated tests;
 not walked on the actual projector.
 

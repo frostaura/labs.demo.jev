@@ -36,7 +36,7 @@ None intended. If the typed-decision wrapper (`TypedDecisions.cs`) proves useful
 - **The stage is a fixed 1920×1080 canvas scaled to the window.** Size everything in stage pixels; never add scrolling to a slide.
 - **Numbers on slides are real.** XGBoost accuracies are the output of the scripts in `examples/xgboost`; if a script changes, re-run it and update the slide. Latency and cost are measured live, never hard-coded.
 - **Claims about Jev stay within what is documented or measured.** OpenRouter's docs do not describe Jev's internals — do not add architecture claims.
-- **No sponsor logo is committed that the founder did not supply.** An empty sponsor folder hides the strip.
+- **Sponsor logos are the founder's to supply.** The only other images allowed in the sponsor folder are the invented `example-*.svg` files, kept at the founder's request to show how the strip and its `Overrides` work; never add a real company's mark that the founder did not hand over. An empty sponsor folder hides the strip.
 - **Zero build warnings** — `dotnet build -warnaserror`.
 
 ## Build / test / run

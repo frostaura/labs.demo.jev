@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 200" role="img" aria-label="Example sponsor: Lumen Labs">
+  <circle cx="96" cy="100" r="34" fill="#f5a300"/>
+  <g stroke="#f5a300" stroke-width="10" stroke-linecap="round">
+    <path d="M96 34v14M96 152v14M30 100h14M148 100h14M49 53l10 10M133 137l10 10M49 147l10-10M133 63l10-10"/>
+  </g>
+  <text x="190" y="92" font-family="Helvetica, Arial, sans-serif" font-size="58" font-weight="700" letter-spacing="-2" fill="#0a0a0b">Lumen</text>
+  <text x="192" y="142" font-family="Helvetica, Arial, sans-serif" font-size="34" font-weight="400" letter-spacing="8" fill="#55555e">LABS</text>
+</svg>
