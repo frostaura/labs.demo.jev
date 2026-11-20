@@ -1,0 +1,10 @@
+[
+  { "id": 1, "sex": "male",   "age": 22, "siblingsOrSpouses": 1, "parentsOrChildren": 0, "fare": 7.25,    "embarked": "Southampton", "ticketClass": "third",  "survived": false },
+  { "id": 2, "sex": "female", "age": 38, "siblingsOrSpouses": 1, "parentsOrChildren": 0, "fare": 71.2833, "embarked": "Cherbourg",   "ticketClass": "first",  "survived": true  },
+  { "id": 3, "sex": "female", "age": 26, "siblingsOrSpouses": 0, "parentsOrChildren": 0, "fare": 7.925,   "embarked": "Southampton", "ticketClass": "third",  "survived": true  },
+  { "id": 4, "sex": "male",   "age": 54, "siblingsOrSpouses": 0, "parentsOrChildren": 0, "fare": 51.8625, "embarked": "Southampton", "ticketClass": "first",  "survived": false },
+  { "id": 5, "sex": "male",   "age": 2,  "siblingsOrSpouses": 3, "parentsOrChildren": 1, "fare": 21.075,  "embarked": "Southampton", "ticketClass": "third",  "survived": false },
+  { "id": 6, "sex": "female", "age": 14, "siblingsOrSpouses": 1, "parentsOrChildren": 0, "fare": 30.0708, "embarked": "Cherbourg",   "ticketClass": "second", "survived": true  },
+  { "id": 7, "sex": "female", "age": 58, "siblingsOrSpouses": 0, "parentsOrChildren": 0, "fare": 26.55,   "embarked": "Southampton", "ticketClass": "first",  "survived": true  },
+  { "id": 8, "sex": "male",   "age": 35, "siblingsOrSpouses": 0, "parentsOrChildren": 0, "fare": 8.05,    "embarked": "Southampton", "ticketClass": "third",  "survived": false }
+]

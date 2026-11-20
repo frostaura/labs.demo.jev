@@ -1,0 +1,13 @@
+.env
+.env.*
+!.env.example
+bin/
+obj/
+.tmp/
+.cache/
+.vs/
+.idea/
+*.user
+.DS_Store
+__pycache__/
+.venv/

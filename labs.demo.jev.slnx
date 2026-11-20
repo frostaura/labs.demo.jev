@@ -1,0 +1,5 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Jev.Demo/Jev.Demo.csproj" />
+  </Folder>
+</Solution>
