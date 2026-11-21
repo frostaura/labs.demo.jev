@@ -24,8 +24,10 @@ the founder's direction.
 - Offline replay proven by running a second instance with an invalid key: a previously asked
   question replayed flagged as cached; a new one returned the 401.
 - The sponsor strip was exercised with throwaway SVG logos, then removed.
-- The real 13-logo strip was checked in headless Chromium against the static deck (not the .NET
-  app) in a cloud session: every logo whole inside its white card on slides 1 and 31, both themes.
+- The real 13-logo strip was checked in headless Chromium against the running app in a cloud
+  session (Linux, no API key): `/api/config` listed all 13 with their names, every logo sat whole
+  inside its white card on slides 1 and 31 in both themes, and `dotnet build -warnaserror` gave
+  0 warnings. Not yet seen on the founder's Mac.
 - `dotnet build -warnaserror`: 0 warnings. The three XGBoost scripts were run in a throwaway
   virtualenv: 82.1% · 95.0% · 80.4% and 94.4%, the figures on the slides.
 
