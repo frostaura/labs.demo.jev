@@ -119,9 +119,23 @@ function renderTalk({ talk, sponsors, jev }) {
   fillText('[data-talk="subtitle"]', talk.subtitle);
   fillText('[data-talk="event"]', talk.event);
   fillText('[data-speaker="name"]', talk.speaker.name);
-  fillText('[data-speaker="role"]', talk.speaker.role);
+  const roles = talk.speaker.roles ?? [];
+  // Compact form for the closing slide: "Founder & CEO, FrostAura  ·  AI Architect, MagicOrange".
+  fillText('[data-speaker="role"]', roles.map((r) => [r.title, r.company].filter(Boolean).join(", ")).join("  ·  "));
   fillText('[data-speaker="links"]', talk.speaker.links.join("  ·  "));
-  $$('[data-speaker="bio"]').forEach((node) => node.replaceChildren(...talk.speaker.bio.map((line) => el("div", { textContent: line }))));
+  // Full form for the opening slide: one block per role, in the order configured.
+  $$('[data-speaker="roles"]').forEach((node) => {
+    node.replaceChildren(...roles.map((r) => {
+      const line = el("div", { className: "line" },
+        el("span", { className: "title", textContent: r.title }),
+        el("span", { className: "company", textContent: r.company }));
+      if (r.since) line.append(el("span", { className: "since", textContent: `since ${r.since}` }));
+      const block = el("div", { className: "position" }, line);
+      if (r.about) block.append(el("div", { className: "about", textContent: r.about }));
+      return block;
+    }));
+    node.hidden = roles.length === 0;
+  });
   $$('[data-speaker="photo"]').forEach((img) => {
     if (!talk.speaker.photo) return;
     img.src = talk.speaker.photo;

@@ -36,7 +36,8 @@ is loaded.
 
 Everything a speaker changes lives in `src/Jev.Demo/appsettings.json`:
 
-- **`Talk`** — title, subtitle, event name, and the speaker's name, role, bio lines, links and
+- **`Talk`** — title, subtitle, event name, and the speaker's name, `Roles` (each a
+  title, company, start date and one-line description, shown in order on the first slide), links and
   optional photo (a path under `wwwroot`, e.g. `assets/speaker.jpg`).
 - **`Sponsors`** — the scrolling logo strip on the first and last slides.
 

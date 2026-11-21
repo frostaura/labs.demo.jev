@@ -109,10 +109,18 @@ public sealed class TalkOptions
 public sealed class SpeakerOptions
 {
     public string Name { get; set; } = "";
-    public string Role { get; set; } = "";
     public string Photo { get; set; } = "";
-    public List<string> Bio { get; set; } = [];
+    public List<RoleOptions> Roles { get; set; } = [];
     public List<string> Links { get; set; } = [];
+}
+
+// One position the speaker holds, listed in the order the deck shows them.
+public sealed class RoleOptions
+{
+    public string Title { get; set; } = "";
+    public string Company { get; set; } = "";
+    public string Since { get; set; } = "";
+    public string About { get; set; } = "";
 }
 
 public partial class Program;
