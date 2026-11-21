@@ -121,8 +121,8 @@ ul.big li::before { content: ""; position: absolute; left: 6px; top: 37px; width
 .position .since { font-family: var(--mono); font-size: 22px; letter-spacing: 0; color: var(--muted); padding: 2px 12px; border: 1.5px solid var(--line); border-radius: 999px; }
 .position .about { font-size: 25px; line-height: 1.3; color: var(--muted); margin-top: 2px; max-width: 1500px; }
 
-/* Thank-you slide: closing words on the left, the session-rating QR on the right. */
-.thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
+/* Opening and thank-you slides: words on the left, a QR code on the right (the repository, then the session rating). */
+.welcome-main, .thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
 .rate { margin: 0; flex: none; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 /* The code sits on a light tile in both themes so phones can always read it. */
 .rate .qr { background: var(--tile); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 0 0 6px var(--accent-soft); }
@@ -251,3 +251,8 @@ button { font: inherit; cursor: pointer; }
 .slide.welcome .rule { margin: 24px 0 0; }
 .slide.welcome .speaker { margin-top: 22px; }
 .slide.welcome .sponsors { margin-top: 18px; }
+/* The repository QR is a little smaller than the closing one so each role description stays on one line beside it. */
+.slide.welcome .welcome-main { gap: 64px; }
+.slide.welcome .rate .qr img { width: 280px; height: 280px; }
+.slide.welcome .rate .url { font-size: 16px; }
+.slide.welcome .position .about { font-size: 23px; }

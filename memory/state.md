@@ -53,8 +53,16 @@ request:**
   1920×1080 in both themes, with and without an event name and with the example sponsor strip.
   The QR code decodes to the right URL from the rendered slide.
 
+**Repository QR code on the opening slide** (founder, 2026-11-21): `assets/repo.svg`, pointing at
+`https://github.com/frostaura/labs.demo.jev`, on the right of the opening slide the way the
+session-rating code sits on the closing one, labelled "Get the code". It is 280 px rather than the
+closing slide's 340 px, and the role descriptions on that slide are 23 px, so each description
+stays on one line and the slide still fits when an event name is set. Checked from a cloud session
+against the running app: 0 build warnings, no overflow with or without an event name, and the code
+decodes to the repository URL from the rendered slide in both themes.
+
 **Not done:** no speaker photo supplied; no automated tests; not walked on the actual projector;
-the session-rating QR, the speaker-role changes and the real sponsor strip have not been seen on
+the two QR codes, the speaker-role changes and the real sponsor strip have not been seen on
 the founder's Mac.
 
 **The key in use during verification came from the founder's shell environment**, not from `.env`
