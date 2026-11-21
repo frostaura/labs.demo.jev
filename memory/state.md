@@ -1,6 +1,6 @@
 ---
 name: labs-demo-jev-state
-description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Public repo, in-tree clone is the working copy. Real sponsor logos in; no speaker photo yet."
+description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Session-rating QR on the closing slide, both speaker roles (FrostAura, MagicOrange) on the opening slide, and 13 real sponsor logos in the strip. No speaker photo yet."
 type: state
 last_verified: 2026-11-21
 ---
@@ -38,9 +38,24 @@ files and their overrides were removed at the founder's direction. Excluded on t
 markup: the .NET Conf banner, the heading, the tier labels and the individual contributor. The
 crops are screenshot resolution (about 100–180 px tall); swap in vector originals if they turn up.
 
-**Not done:** no speaker photo supplied; the speaker bio in
-`appsettings.json` is a two-line stand-in written from the root brand lines; no automated tests;
-not walked on the actual projector.
+**Added later on 2026-11-21 (PR #1, merged), at the founder's
+request:**
+
+- A session-rating QR code on the Thank-you slide (`assets/rate-session.svg`, pointing at
+  `https://durban-encore.sessionize.com`, the conference's Sessionize page), on the right next to the
+  closing words.
+- The speaker config is now a `Roles` list, and the opening slide shows both roles in order:
+  FrostAura (Founder & CEO, since 2014), then MagicOrange (AI Architect, since October 2025), each
+  with a one-line description. The MagicOrange line was written from its public site (IT and cloud
+  cost-transparency software). The closing slide shows both titles on one line.
+- These were checked from a cloud session, not the founder's Mac: `dotnet build -warnaserror`
+  gave 0 warnings, the real app's `/api/config` returned both roles, and both slides fit at
+  1920×1080 in both themes, with and without an event name and with the example sponsor strip.
+  The QR code decodes to the right URL from the rendered slide.
+
+**Not done:** no speaker photo supplied; no automated tests; not walked on the actual projector;
+the session-rating QR, the speaker-role changes and the real sponsor strip have not been seen on
+the founder's Mac.
 
 **The key in use during verification came from the founder's shell environment**, not from `.env`
 — `.env` was still blank when the session's checks ran. A real environment variable wins over the
