@@ -1,6 +1,6 @@
 ---
 name: labs-demo-jev-state
-description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Session-rating QR on the closing slide and both speaker roles (FrostAura, MagicOrange) on the opening slide, in draft PR #1. No sponsor logos or speaker photo yet."
+description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Session-rating QR on the closing slide, both speaker roles (FrostAura, MagicOrange) on the opening slide, and 13 real sponsor logos in the strip. No speaker photo yet."
 type: state
 last_verified: 2026-11-21
 ---
@@ -24,14 +24,21 @@ the founder's direction.
 - Offline replay proven by running a second instance with an invalid key: a previously asked
   question replayed flagged as cached; a new one returned the 401.
 - The sponsor strip was exercised with throwaway SVG logos, then removed.
+- The real 13-logo strip was checked in headless Chromium against the running app in a cloud
+  session (Linux, no API key): `/api/config` listed all 13 with their names, every logo sat whole
+  inside its white card on slides 1 and 31 in both themes, and `dotnet build -warnaserror` gave
+  0 warnings. Not yet seen on the founder's Mac.
 - `dotnet build -warnaserror`: 0 warnings. The three XGBoost scripts were run in a throwaway
   virtualenv: 82.1% · 95.0% · 80.4% and 94.4%, the figures on the slides.
 
-**Example sponsor logos are committed on purpose** (founder, 2026-11-21: keep examples "so that I
-know what to override", and they must be pictures): four invented `example-*.svg` files plus four
-matching `Sponsors:Overrides` entries. They show on the first and last slides until replaced.
+**Real sponsor logos are in** (founder, 2026-11-21): 13 PNGs in `assets/sponsors/` — the Data & AI
+Community Day Durban event mark plus 12 sponsors — cropped from the founder's screenshot of the
+event's sponsor slide, with display names in `Sponsors:Overrides`. The four invented `example-*.svg`
+files and their overrides were removed at the founder's direction. Excluded on the founder's
+markup: the .NET Conf banner, the heading, the tier labels and the individual contributor. The
+crops are screenshot resolution (about 100–180 px tall); swap in vector originals if they turn up.
 
-**Added later on 2026-11-21 (draft PR #1, branch `claude/modest-dijkstra-6ogp5z`), at the founder's
+**Added later on 2026-11-21 (PR #1, merged), at the founder's
 request:**
 
 - A session-rating QR code on the Thank-you slide (`assets/rate-session.svg`, pointing at
@@ -46,9 +53,17 @@ request:**
   1920×1080 in both themes, with and without an event name and with the example sponsor strip.
   The QR code decodes to the right URL from the rendered slide.
 
-**Not done:** no real sponsor logos and no speaker photo supplied; no automated tests; not walked
-on the actual projector; the session-rating QR and speaker-role changes have not been seen on the
-founder's Mac.
+**Repository QR code on the opening slide** (founder, 2026-11-21): `assets/repo.svg`, pointing at
+`https://github.com/frostaura/labs.demo.jev`, on the right of the opening slide the way the
+session-rating code sits on the closing one, labelled "Get the code". It is 280 px rather than the
+closing slide's 340 px, and the role descriptions on that slide are 23 px, so each description
+stays on one line and the slide still fits when an event name is set. Checked from a cloud session
+against the running app: 0 build warnings, no overflow with or without an event name, and the code
+decodes to the repository URL from the rendered slide in both themes.
+
+**Not done:** no speaker photo supplied; no automated tests; not walked on the actual projector;
+the two QR codes, the speaker-role changes and the real sponsor strip have not been seen on
+the founder's Mac.
 
 **The key in use during verification came from the founder's shell environment**, not from `.env`
 — `.env` was still blank when the session's checks ran. A real environment variable wins over the

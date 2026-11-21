@@ -4,15 +4,15 @@ Drop any number of logo files in this directory (`.png`, `.jpg`, `.jpeg`, `.svg`
 They appear in the scrolling sponsor strip on the opening and closing slides on the next page
 load — no rebuild, no restart. Logos are sorted by file name; prefix with `01-`, `02-` to order them.
 
-## The example logos
+## The current set
 
-The four `example-*.svg` files are made-up companies, there so the strip has something to show and
-so you can see how it is wired. **Delete them when the real logos arrive**, and remove their four
-entries from `Sponsors:Overrides` in `appsettings.json` (an override whose file is missing is
-simply ignored, so nothing breaks if you forget).
+The event mark first, then the sponsors by tier (platinum, gold, silver, then Derivco), each cropped
+from the event's sponsor slide. Their display names live in `Sponsors:Overrides` in
+`appsettings.json` (an override whose file is missing is simply ignored).
 
-Logos sit on a white tile about twice as wide as it is tall. A wide, horizontal logo with a
-transparent or white background fills it best; anything else is scaled down to fit, never cropped.
+Every logo sits whole inside a white card about twice as wide as it is tall, in both themes. A
+wide, horizontal logo with a transparent or white background fills it best; anything else is
+scaled to fit, never cropped.
 
 ## Settings
 

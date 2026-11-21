@@ -45,8 +45,7 @@ Everything a speaker changes lives in `src/Jev.Demo/appsettings.json`:
 
 Drop any number of image files into `src/Jev.Demo/wwwroot/assets/sponsors/` and refresh the page.
 No rebuild, no restart; the strip repeats the set until it fills the screen and scrolls forever.
-With no files, the strip is hidden. The four `example-*.svg` logos in that folder are invented
-companies that show how it works — delete them when your real ones arrive. Optional settings (`Heading`, `SecondsPerLogo`, `Exclude`, and
+With no files, the strip is hidden. Each logo is fitted whole inside a white card, never cropped. Optional settings (`Heading`, `SecondsPerLogo`, `Exclude`, and
 per-file `Overrides` for name, link and order) are described in
 [that folder's README](src/Jev.Demo/wwwroot/assets/sponsors/README.md).
 

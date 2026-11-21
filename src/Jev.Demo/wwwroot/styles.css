@@ -121,8 +121,8 @@ ul.big li::before { content: ""; position: absolute; left: 6px; top: 37px; width
 .position .since { font-family: var(--mono); font-size: 22px; letter-spacing: 0; color: var(--muted); padding: 2px 12px; border: 1.5px solid var(--line); border-radius: 999px; }
 .position .about { font-size: 25px; line-height: 1.3; color: var(--muted); margin-top: 2px; max-width: 1500px; }
 
-/* Thank-you slide: closing words on the left, the session-rating QR on the right. */
-.thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
+/* Opening and thank-you slides: words on the left, a QR code on the right (the repository, then the session rating). */
+.welcome-main, .thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
 .rate { margin: 0; flex: none; display: flex; flex-direction: column; align-items: center; gap: 22px; }
 /* The code sits on a light tile in both themes so phones can always read it. */
 .rate .qr { background: var(--tile); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 0 0 6px var(--accent-soft); }
@@ -137,8 +137,8 @@ ul.big li::before { content: ""; position: absolute; left: 6px; top: 37px; width
 .sponsors .heading { font-size: 22px; font-weight: 650; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 0 120px 20px; }
 .marquee { overflow: hidden; width: 100%; }
 .marquee .track { display: flex; width: max-content; animation: marquee linear infinite; }
-.marquee .logo { flex: none; width: 300px; height: 140px; margin-right: 40px; background: var(--tile); border: 1.5px solid var(--line); border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 22px; }
-/* Fill the tile as far as the logo's own shape allows: scaled up or down, never stretched or cropped. */
+.marquee .logo { flex: none; width: 300px; height: 140px; margin-right: 40px; background: var(--tile); border: 1.5px solid var(--line); border-radius: 20px; display: flex; align-items: center; justify-content: center; padding: 14px 18px; }
+/* The card is white in both themes; each logo is fitted whole inside it: scaled up or down, never stretched or cropped. */
 .marquee .logo img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .slide.thanks .marquee .logo { width: 360px; height: 170px; }
 @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -251,3 +251,8 @@ button { font: inherit; cursor: pointer; }
 .slide.welcome .rule { margin: 24px 0 0; }
 .slide.welcome .speaker { margin-top: 22px; }
 .slide.welcome .sponsors { margin-top: 18px; }
+/* The repository QR is a little smaller than the closing one so each role description stays on one line beside it. */
+.slide.welcome .welcome-main { gap: 64px; }
+.slide.welcome .rate .qr img { width: 280px; height: 280px; }
+.slide.welcome .rate .url { font-size: 16px; }
+.slide.welcome .position .about { font-size: 23px; }
