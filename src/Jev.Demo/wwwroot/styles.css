@@ -113,6 +113,16 @@ ul.big li::before { content: ""; position: absolute; left: 6px; top: 37px; width
 .speaker .role { font-size: 32px; color: var(--accent); font-weight: 600; }
 .speaker .bio { font-size: 30px; color: var(--muted); margin-top: 8px; }
 
+/* Thank-you slide: closing words on the left, the session-rating QR on the right. */
+.thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
+.rate { margin: 0; flex: none; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+/* The code sits on a light tile in both themes so phones can always read it. */
+.rate .qr { background: var(--tile); border: 1.5px solid var(--line); border-radius: var(--radius); padding: 28px; box-shadow: 0 0 0 6px var(--accent-soft); }
+.rate .qr img { display: block; width: 340px; height: 340px; image-rendering: pixelated; }
+.rate figcaption { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.rate .label { font-size: 22px; font-weight: 650; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); }
+.rate .url { font-size: 24px; font-family: var(--mono); letter-spacing: 0; color: var(--muted); }
+
 /* Sponsor strip: an endless horizontal scroller, any number of logos. */
 .sponsors { margin: 28px -120px 0; }
 .sponsors[hidden] { display: none; }
