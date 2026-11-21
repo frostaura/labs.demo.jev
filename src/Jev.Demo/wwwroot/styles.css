@@ -112,6 +112,14 @@ ul.big li::before { content: ""; position: absolute; left: 6px; top: 37px; width
 .speaker .name { font-size: 46px; font-weight: 700; letter-spacing: -0.03em; }
 .speaker .role { font-size: 32px; color: var(--accent); font-weight: 600; }
 .speaker .bio { font-size: 30px; color: var(--muted); margin-top: 8px; }
+/* Opening slide: each role the speaker holds, with a thin accent bar down the left. */
+.positions { display: flex; flex-direction: column; gap: 14px; margin-top: 12px; }
+.position { border-left: 5px solid var(--accent); padding-left: 24px; }
+.position .line { display: flex; align-items: baseline; gap: 14px; font-size: 32px; }
+.position .title { font-weight: 650; }
+.position .company { color: var(--accent); font-weight: 650; }
+.position .since { font-family: var(--mono); font-size: 22px; letter-spacing: 0; color: var(--muted); padding: 2px 12px; border: 1.5px solid var(--line); border-radius: 999px; }
+.position .about { font-size: 25px; line-height: 1.3; color: var(--muted); margin-top: 2px; max-width: 1500px; }
 
 /* Thank-you slide: closing words on the left, the session-rating QR on the right. */
 .thanks-main { display: flex; align-items: center; justify-content: space-between; gap: 80px; }
@@ -236,3 +244,10 @@ button { font: inherit; cursor: pointer; }
 #progress { position: absolute; left: 0; bottom: 0; height: 6px; background: var(--accent); transition: width 0.25s ease; }
 #status { font-family: var(--mono); font-size: 19px; padding: 6px 16px; border-radius: 999px; border: 1.5px solid var(--good); color: var(--good); }
 #status.off { border-color: var(--bad); color: var(--bad); }
+
+/* Opening slide: title, speaker roles and sponsor strip share one screen, so spacing is tighter here. */
+.slide.welcome h1 { font-size: 108px; margin-bottom: 24px; }
+.slide.welcome .sub { margin-bottom: 0; }
+.slide.welcome .rule { margin: 24px 0 0; }
+.slide.welcome .speaker { margin-top: 22px; }
+.slide.welcome .sponsors { margin-top: 18px; }
