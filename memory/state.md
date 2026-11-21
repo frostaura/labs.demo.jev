@@ -1,6 +1,6 @@
 ---
 name: labs-demo-jev-state
-description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Public repo, in-tree clone is the working copy. No sponsor logos or speaker photo yet."
+description: "Created 2026-11-21 for a university talk on 2026-11-22: 31-slide .NET deck, all six live Jev demos verified against OpenRouter from the founder's Mac. Public repo, in-tree clone is the working copy. Real sponsor logos in; no speaker photo yet."
 type: state
 last_verified: 2026-11-21
 ---
@@ -24,14 +24,19 @@ the founder's direction.
 - Offline replay proven by running a second instance with an invalid key: a previously asked
   question replayed flagged as cached; a new one returned the 401.
 - The sponsor strip was exercised with throwaway SVG logos, then removed.
+- The real 13-logo strip was checked in headless Chromium against the static deck (not the .NET
+  app) in a cloud session: every logo whole inside its white card on slides 1 and 31, both themes.
 - `dotnet build -warnaserror`: 0 warnings. The three XGBoost scripts were run in a throwaway
   virtualenv: 82.1% · 95.0% · 80.4% and 94.4%, the figures on the slides.
 
-**Example sponsor logos are committed on purpose** (founder, 2026-11-21: keep examples "so that I
-know what to override", and they must be pictures): four invented `example-*.svg` files plus four
-matching `Sponsors:Overrides` entries. They show on the first and last slides until replaced.
+**Real sponsor logos are in** (founder, 2026-11-21): 13 PNGs in `assets/sponsors/` — the Data & AI
+Community Day Durban event mark plus 12 sponsors — cropped from the founder's screenshot of the
+event's sponsor slide, with display names in `Sponsors:Overrides`. The four invented `example-*.svg`
+files and their overrides were removed at the founder's direction. Excluded on the founder's
+markup: the .NET Conf banner, the heading, the tier labels and the individual contributor. The
+crops are screenshot resolution (about 100–180 px tall); swap in vector originals if they turn up.
 
-**Not done:** no real sponsor logos and no speaker photo supplied; the speaker bio in
+**Not done:** no speaker photo supplied; the speaker bio in
 `appsettings.json` is a two-line stand-in written from the root brand lines; no automated tests;
 not walked on the actual projector.
 
